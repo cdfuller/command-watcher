@@ -24,4 +24,4 @@ $ ./command-watcher -i 10 psql -d db-name -c '"SELECT COUNT(*) FROM "users";'
 
 ## TODO
 * Add alias support by adding shell support to subprocess.run
-  * Do I need to check to see which shell the use is currently using?
+  * Do I need to check to see which shell the user is currently using?
