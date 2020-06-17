@@ -8,8 +8,6 @@ import time
 
 from datetime import datetime
 
-# running sql command
-# ./run psql -d db_name -c 'SELECT COUNT(*) FROM "public"."users";'
 
 def forever(command, interval, repeat=False):
     print(f"Running command: {' '.join(command)}")
