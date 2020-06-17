@@ -38,9 +38,9 @@ def forever(command, interval, repeat=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--interval', help="interval in seconds to run the command", default=2.5, type=float)
+    parser.add_argument('-i', '--interval', help="interval in seconds to run the command, default: 2.5", default=2.5, type=float)
     parser.add_argument('command', help="the command to run")
-    parser.add_argument('command_args', nargs=argparse.REMAINDER)
+    parser.add_argument('command_args', nargs=argparse.REMAINDER, help=argparse.SUPPRESS)
     args = parser.parse_args()
 
     script = args.command
