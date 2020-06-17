@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+import argparse
+import os
+import shlex
+import subprocess
+import sys
+import time
+
+from datetime import datetime
+
+# running sql command
+# ./run psql -d db_name -c 'SELECT COUNT(*) FROM "public"."users";'
+
+def forever(command, interval, repeat=False):
+    print(f"Running command: {' '.join(command)}")
+    previous = ""
+    last_changed_time = None
+
+    while True:
+        completed = subprocess.run(command, capture_output=True, text=True)
+
+        if repeat:
+            print(completed.stdout, end='')
+
+        elif completed.stdout != previous:
+            last_changed_time = datetime.now()
+            previous = completed.stdout
+
+            print(f"Changed at {last_changed_time}")
+            print(completed.stdout, end='')
+
+        if completed.stderr:
+            print("Error")
+            print(completed.stderr)
+
+        time.sleep(interval)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--interval', help="interval in seconds to run the command", default=2.5, type=float)
+    parser.add_argument('command', help="the command to run")
+    parser.add_argument('command_args', nargs=argparse.REMAINDER)
+    args = parser.parse_args()
+
+    script = args.command
+    command_args = args.command_args
+    interval = args.interval
+
+    try:
+        forever([args.command] + args.command_args, interval)
+    except KeyboardInterrupt:
+        print("\nGoodbye!")
+        sys.exit(0)
