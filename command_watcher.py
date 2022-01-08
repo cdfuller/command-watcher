@@ -8,6 +8,30 @@ import time
 
 from datetime import datetime
 
+class CommandWatcher:
+
+    def __init__(self, command, interval, **kwargs):
+        self.command = command
+        self.interval = interval
+        self.iterations = kwargs.get('iterations', -1)
+        self.execution_count = 0
+
+    def loop(self):
+        while True:
+            if self.execution_count - self.iterations:
+                break
+            else:
+                self.execute()
+
+
+    def execute(self):
+        self.execution_count += 1
+
+
+    def __repr__(self):
+        command = shlex.join(self.command)
+        return f"<CommandWatcher {self.interval}s cmd: {command}>" 
+
 
 def forever(command, interval, repeat=False):
     print(f"Running command: {' '.join(command)}")
@@ -24,8 +48,11 @@ def forever(command, interval, repeat=False):
             last_changed_time = datetime.now()
             previous = completed.stdout
 
-            print(f"Changed at {last_changed_time}")
+            print(f"\nChanged at {last_changed_time}")
             print(completed.stdout, end='')
+
+        else:
+            print('.', end='', flush=True)
 
         if completed.stderr:
             print("Error")
@@ -44,6 +71,9 @@ if __name__ == '__main__':
     script = args.command
     command_args = args.command_args
     interval = args.interval
+    
+    cw = CommandWatcher([args.command] + args.command_args, interval)
+    print(cw)
 
     try:
         forever([args.command] + args.command_args, interval)
