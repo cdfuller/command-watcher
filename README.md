@@ -19,7 +19,7 @@ optional arguments:
 ### Examples
 * Running a sql command every 10 seconds
 ```bash
-$ ./command_watcher.py -i 10 psql -d db-name -c '"SELECT COUNT(*) FROM "users";'
+$ ./command_watcher.py -i 10 psql -d db-name -c 'SELECT COUNT(*) FROM "users";'
 ```
 
 ## TODO
