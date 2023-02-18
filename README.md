@@ -4,7 +4,7 @@ A script for continously running a shell command and printing the output when it
 
 ## Usage
 ```
-$ ./command-watcher --help
+$ ./command_watcher.py --help
 usage: command-watcher [-h] [-i INTERVAL] command
 
 positional arguments:
@@ -19,7 +19,7 @@ optional arguments:
 ### Examples
 * Running a sql command every 10 seconds
 ```bash
-$ ./command-watcher -i 10 psql -d db-name -c '"SELECT COUNT(*) FROM "users";'
+$ ./command_watcher.py -i 10 psql -d db-name -c '"SELECT COUNT(*) FROM "users";'
 ```
 
 ## TODO
